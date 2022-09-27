@@ -40,11 +40,11 @@ def money_stage(eur_key):
         # print('DEBUG - spare:', spare)
         if take_money:
             if new_abs_diff < spare:
-                print('DEBUG - taking one money item of: ' + str(eur_key) + ', new_abs_diff: ' + str(new_abs_diff)
-                      + ', spare: ' + str(spare))
+                # print('DEBUG - taking one money item of: ' + str(eur_key) + ', new_abs_diff: ' + str(new_abs_diff)
+                #       + ', spare: ' + str(spare))
                 eur[eur_key] = eur[eur_key] - 1
         else:
-            print('DEBUG - adding one money item of:', eur_key)
+            # print('DEBUG - adding one money item of:', eur_key)
             eur[eur_key] = eur[eur_key] + 1
 
 
