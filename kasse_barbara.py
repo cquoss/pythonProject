@@ -24,10 +24,8 @@ def money_stage(eur_key):
     if take_money and avail == 0:
         return
     # check if diff is euros only, then ignore cents
-    # euros_only = False
-    # if math.modf(diff)[0] == 0:
-    #     euros_only = True
-    #     print('Euros only.')
+    if math.modf(diff)[0] == 0 and eur_key < 1:
+        return
     # take / give money with 10% probability
     prob = random.random()
     # print ('DEBUG - prob:', prob)
