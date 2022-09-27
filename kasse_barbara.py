@@ -24,15 +24,18 @@ def money_stage(eur_key):
     if take_money and avail == 0:
         return
     # check if diff is euros only, then ignore cents
-    if math.modf(diff)[0] == 0 and eur_key < 1:
-        return
+    no_cents = False
+    if math.modf(diff)[0] == 0:
+        no_cents = True
+        if eur_key < 1:
+            return
     # take / give money with 10% probability
     prob = random.random()
     # print ('DEBUG - prob:', prob)
     if prob < 0.1 or ( diff == 0.01 and eur_key == 0.01 ):
         # when about to hand out the money stage item, make sure all the stages equal or beneath can still service the
         #     spare amount
-        spare = calc_current(eur_key)
+        spare = calc_current(eur_key, no_cents)
         new_abs_diff = round(abs(diff + eur_key), 2)
         # print('DEBUG - spare:', spare)
         if take_money:
@@ -45,11 +48,14 @@ def money_stage(eur_key):
             eur[eur_key] = eur[eur_key] + 1
 
 
-def calc_current(init_stage):
+def calc_current(init_stage, no_cents):
     result = 0.0
     for calc_key in eur:
-        if calc_key <= init_stage:
-            result += calc_key * eur[calc_key]
+        if no_cents and calc_key < 1:
+            pass
+        else:
+            if calc_key <= init_stage:
+                result += calc_key * eur[calc_key]
     result = round(result, 2)
     # print('DEBUG - calc_current(' + str(init_stage) + '): ' + str(result))
     return round(result, 2)
@@ -59,7 +65,7 @@ def calc_current(init_stage):
 eur = { 200: 0, 100: 0, 50: 2, 20: 0, 10: 2, 5: 4, 2: 2, 1: 2, 0.5: 4, 0.2: 7, 0.1: 3, 0.05: 4, 0.02: 5, 0.01: 2 }
 
 # print current amount
-print('Current:', calc_current(200))
+print('Current:', calc_current(200, False))
 
 # loop forever, on each loop: fall through the money stages, applying each stage with 10% probability until the
 #     difference is met
@@ -68,14 +74,14 @@ while True:
     # prompt for new amount
     new = float(input('Neuer Betrag: ').replace(',', '.'))
     # pre-calculate the difference
-    diff = round(new - calc_current(200), 2)
+    diff = round(new - calc_current(200, False), 2)
     # print('DEBUG - initial diff:', diff)
     while diff != 0:
         for key in eur:
             # try to apply money item
             money_stage(key)
             # re-calculate the difference
-            diff = round(new - calc_current(200), 2)
+            diff = round(new - calc_current(200, False), 2)
             # print('DEBUG - diff:', diff)
     # print resulting money stages
     for key in eur:
