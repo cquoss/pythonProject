@@ -62,7 +62,11 @@ def calc_current(init_stage, no_cents):
 
 
 # define start values (150,02 EUR)
-eur = { 200: 0, 100: 0, 50: 2, 20: 0, 10: 2, 5: 4, 2: 2, 1: 2, 0.5: 4, 0.2: 7, 0.1: 3, 0.05: 4, 0.02: 5, 0.01: 2 }
+eur = { 200: int(input('# 200 EUR: ')), 100: int(input('# 100 EUR: ')), 50: int(input('# 50 EUR: ')),
+        20: int(input('# 20 EUR: ')), 10: int(input('# 10 EUR: ')), 5: int(input('# 5 EUR: ')),
+        2: int(input('# 2 EUR: ')), 1: int(input('# 1 EUR: ')), 0.5: int(input('# 50 Cent: ')),
+        0.2: int(input('# 20 Cent: ')), 0.1: int(input('# 10 Cent: ')), 0.05: int(input('# 5 Cent: ')),
+        0.02: int(input('# 2 Cent: ')), 0.01: int(input('# 1 Cent: ')) }
 
 # print current amount
 print('Current:', calc_current(200, False))
